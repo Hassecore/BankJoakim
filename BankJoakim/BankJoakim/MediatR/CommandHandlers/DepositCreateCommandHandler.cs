@@ -34,11 +34,14 @@ namespace BankJoakim.MediatR.CommandHandlers
                 });
             }
 
+            account.Balance += resource.Ammount;
+
             var deposit = new Deposit
             {
                 Id = Guid.NewGuid(),
                 Ammount = resource.Ammount,
                 AccountId = resource.AccountId.Value,
+                Account = account,
                 CreatedOn = DateTime.UtcNow
             };
 
