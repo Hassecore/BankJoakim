@@ -1,5 +1,7 @@
 using BankJoakim.Models.Customers;
+using BankJoakim.Models.Deposits;
 using System;
+using System.Collections.Generic;
 
 namespace BankJoakim.Models.Accounts
 {
@@ -13,6 +15,8 @@ namespace BankJoakim.Models.Accounts
 
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
+
+        public List<Deposit> Deposits { get; set; }
 
     }
 }

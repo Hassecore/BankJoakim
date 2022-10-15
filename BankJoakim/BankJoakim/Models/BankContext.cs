@@ -1,5 +1,6 @@
 ﻿using BankJoakim.Models.Accounts;
 using BankJoakim.Models.Customers;
+using BankJoakim.Models.Deposits;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -9,6 +10,7 @@ namespace BankJoakim.Models
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Deposit> Deposits { get; set; }
 
         private string DbPath { get; }
 
@@ -32,11 +34,19 @@ namespace BankJoakim.Models
             modelBuilder.Entity<Account>().Property(a => a.Iban).IsRequired();
             modelBuilder.Entity<Account>().Property(a => a.Balance).IsRequired().HasDefaultValue(0);
             modelBuilder.Entity<Account>().Property(a => a.CreatedOn).IsRequired().HasDefaultValueSql("getutcdate()");
-            modelBuilder.Entity<Account>().Property(a => a.CustomerId).IsRequired(); // required?
             modelBuilder.Entity<Account>().HasOne(a => a.Customer)
                                           .WithMany(c => c.Accounts)
                                           .HasForeignKey(a => a.CustomerId)
                                           .HasConstraintName("FK_Customer")
+                                          .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Deposit>().HasKey(d => d.Id);
+            modelBuilder.Entity<Deposit>().Property(d => d.Ammount).IsRequired();
+            modelBuilder.Entity<Deposit>().Property(d => d.CreatedOn).IsRequired().HasDefaultValueSql("getutcdate()");
+            modelBuilder.Entity<Deposit>().HasOne(d => d.Account)
+                                          .WithMany(a => a.Deposits)
+                                          .HasForeignKey(d => d.AccountId)
+                                          .HasConstraintName("FK_Account")
                                           .OnDelete(DeleteBehavior.Restrict);
         }
     }
