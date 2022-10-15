@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankJoakim.Models.Accounts;
+using System;
 using System.Collections.Generic;
 
 namespace BankJoakim.Models.Customers
@@ -10,6 +11,6 @@ namespace BankJoakim.Models.Customers
         public string LastName { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        List<Account> Accounts { get; set; }
+        public List<Account> Accounts { get; set; }
     }
 }

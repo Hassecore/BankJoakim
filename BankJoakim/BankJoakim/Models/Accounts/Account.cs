@@ -1,13 +1,13 @@
-using BankJoakim.Models;
 using BankJoakim.Models.Customers;
 using System;
 
-namespace BankJoakim
+namespace BankJoakim.Models.Accounts
 {
     public class Account : IEntityBase
     {
         public Guid Id { get; set; }
         public string AccountName { get; set; }
+        public string Iban { get; set; }
         public double Balance { get; set; }
         public DateTime CreatedOn { get; set; }
 

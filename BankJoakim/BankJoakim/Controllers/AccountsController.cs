@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BankJoakim.Models.Accounts;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace BankJoakim.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Account> Get()
+        public IEnumerable<Account> GetAccounts()
         {
             return new List<Account>
             {
