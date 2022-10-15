@@ -1,5 +1,7 @@
-﻿using BankJoakim.MediatR.Queries;
+﻿using BankJoakim.MediatR.Commands;
+using BankJoakim.MediatR.Queries;
 using BankJoakim.Models.Accounts;
+using BankJoakim.Resources.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,7 +33,6 @@ namespace BankJoakim.Controllers
                     CreatedOn = DateTime.UtcNow
                 }
             };
-
         }
 
         [HttpGet]
@@ -51,7 +52,24 @@ namespace BankJoakim.Controllers
             }
 
             return Ok(account);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateAccount([FromBody] AccountCreateResource resource)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var commandResult = await _mediator.Send(new AccountCreateCommand(resource));
+
+            if (!commandResult.HasSucceeded)
+            {
+                return BadRequest(commandResult.ErrorMessage);
+            }
+
+            return Ok(commandResult.Resource);
         }
     }
 }

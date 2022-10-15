@@ -1,6 +1,7 @@
 using BankJoakim.MediatR.QueryHandlers;
 using BankJoakim.Models;
 using BankJoakim.Models.Accounts;
+using BankJoakim.Models.Customers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,7 @@ namespace BankJoakim
             services.AddDbContext<BankContext>();
 
             services.AddScoped<IAccountsRepository, AccountsRepository>();
+            services.AddScoped<ICustomersRepository, CustomersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

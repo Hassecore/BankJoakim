@@ -1,8 +1,14 @@
-﻿namespace BankJoakim.Resources.Accounts
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace BankJoakim.Resources.Accounts
 {
     public class AccountCreateResource
     {
+        [Required]
         public string AccountName { get; set; }
-        public string CustomerId { get; set; }
+
+        [Required]
+        public Guid? CustomerId { get; set; }
     }
 }
