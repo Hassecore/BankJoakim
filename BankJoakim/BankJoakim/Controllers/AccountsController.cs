@@ -1,7 +1,10 @@
-﻿using BankJoakim.Models.Accounts;
+﻿using BankJoakim.MediatR.Queries;
+using BankJoakim.Models.Accounts;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BankJoakim.Controllers
 {
@@ -9,8 +12,10 @@ namespace BankJoakim.Controllers
     [Route("[controller]")]
     public class AccountsController : ControllerBase
     {
-        public AccountsController()
+        readonly IMediator _mediator;
+        public AccountsController(IMediator mediator)
         {
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -26,7 +31,27 @@ namespace BankJoakim.Controllers
                     CreatedOn = DateTime.UtcNow
                 }
             };
-            
+
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetAccount([FromRoute] Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var account = await _mediator.Send(new AccountQuery(id));
+
+            if (account.Id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            return Ok(account);
+
         }
     }
 }

@@ -1,17 +1,13 @@
+using BankJoakim.MediatR.QueryHandlers;
 using BankJoakim.Models;
 using BankJoakim.Models.Accounts;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace BankJoakim
 {
@@ -29,9 +25,11 @@ namespace BankJoakim
         {
             services.AddControllers();
 
+            services.AddMediatR(typeof(AccountQueryHandler).GetTypeInfo().Assembly);
+
             services.AddDbContext<BankContext>();
 
-            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountsRepository, AccountsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
