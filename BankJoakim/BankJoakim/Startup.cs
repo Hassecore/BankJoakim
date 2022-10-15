@@ -1,4 +1,5 @@
 using BankJoakim.Models;
+using BankJoakim.Models.Accounts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,8 @@ namespace BankJoakim
             services.AddControllers();
 
             services.AddDbContext<BankContext>();
+
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
