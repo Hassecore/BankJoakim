@@ -24,10 +24,5 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MediatR\QueryHandlers\" />
-    <Folder Include="Resources\Customers\" />
-  </ItemGroup>
-
 
 </Project>
