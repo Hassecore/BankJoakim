@@ -13,6 +13,7 @@ namespace BankJoakim.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ammount = table.Column<double>(type: "float", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     SendingAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ReceivingAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankJoakim.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221015172233_AddTransactions")]
+    [Migration("20221015172828_AddTransactions")]
     partial class AddTransactions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,11 @@ namespace BankJoakim.Migrations
 
                     b.Property<double>("Ammount")
                         .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("ReceivingAccountId")
                         .HasColumnType("uniqueidentifier");

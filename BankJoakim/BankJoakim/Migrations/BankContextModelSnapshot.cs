@@ -110,6 +110,11 @@ namespace BankJoakim.Migrations
                     b.Property<double>("Ammount")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
                     b.Property<Guid>("ReceivingAccountId")
                         .HasColumnType("uniqueidentifier");
 

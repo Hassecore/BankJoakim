@@ -51,9 +51,9 @@ namespace BankJoakim.Models
                                           .HasConstraintName("FK_Account")
                                           .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Transaction>().ToTable("Transactions")
-                                              .HasKey(t => t.Id);
+            modelBuilder.Entity<Transaction>().ToTable("Transactions").HasKey(t => t.Id);
             modelBuilder.Entity<Transaction>().Property(t => t.Ammount).IsRequired();
+            modelBuilder.Entity<Transaction>().Property(t => t.CreatedOn).IsRequired().HasDefaultValueSql("getutcdate()");
             modelBuilder.Entity<Transaction>().Property(t => t.SendingAccountId).IsRequired();
             modelBuilder.Entity<Transaction>().Property(t => t.ReceivingAccountId).IsRequired();
             modelBuilder.Entity<Transaction>().HasOne(t => t.ReceivingAccount)

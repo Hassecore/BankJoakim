@@ -7,6 +7,7 @@ namespace BankJoakim.Models.Transactions
     {
         public Guid Id { get; set; }
         public double Ammount { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         public Guid SendingAccountId { get; set; }
         public Account SendingAccount { get; set; }
