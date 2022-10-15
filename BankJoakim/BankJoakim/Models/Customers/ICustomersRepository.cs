@@ -4,6 +4,6 @@ namespace BankJoakim.Models.Customers
 {
     public interface ICustomersRepository : IRepositoryBase<Customer>
     {
-        Customer GetCustomerIncludingAccounts(Guid customerId);
+        Customer GetIncludingAccounts(Guid customerId);
     }
 }

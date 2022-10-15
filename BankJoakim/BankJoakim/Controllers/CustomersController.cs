@@ -1,6 +1,7 @@
 ﻿using BankJoakim.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace BankJoakim.Controllers
@@ -26,6 +27,25 @@ namespace BankJoakim.Controllers
             var customers = await _mediator.Send(new CustomersQuery(skip, take));
 
             return Ok(customers);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetCustomer([FromRoute] Guid id, [FromQuery] bool includeAccounts)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var customer = await _mediator.Send(new CustomerQuery(id, includeAccounts));
+
+            if (customer.Id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            return Ok(customer);
         }
     }
 }

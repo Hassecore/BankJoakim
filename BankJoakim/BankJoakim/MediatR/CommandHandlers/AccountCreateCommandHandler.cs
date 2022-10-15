@@ -26,7 +26,7 @@ namespace BankJoakim.MediatR.CommandHandlers
         {
             var resource = request.AccountCreateResource;
 
-            var customer = _customersRepository.GetCustomerIncludingAccounts(resource.CustomerId.Value);
+            var customer = _customersRepository.GetIncludingAccounts(resource.CustomerId.Value);
             if (customer == null)
             {
                 return Task.FromResult(new CommandResult<AccountResource>

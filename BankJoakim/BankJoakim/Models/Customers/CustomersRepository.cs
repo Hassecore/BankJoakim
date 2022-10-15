@@ -11,7 +11,7 @@ namespace BankJoakim.Models.Customers
 
         }
 
-        public Customer GetCustomerIncludingAccounts(Guid customerId)
+        public Customer GetIncludingAccounts(Guid customerId)
         {
             return _context.Customers.Where(c => c.Id == customerId)
                                      .Include(c => c.Accounts)
