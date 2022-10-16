@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using PuppeteerSharp;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,26 +13,27 @@ namespace BankJoakim.Models.Accounts.RandomIbanRetriever
 
         public RandomIbanRetriever(IConfiguration configuration)
         {
-            urlString = "http://randomiban.com/?country=Netherlands";
+            //urlString = "http://randomiban.com/?country=Netherlands";
 
-            var chromeLocation = configuration["AppSettings:ChromeLocation"];
-            var options = new LaunchOptions()
-            {
-                Headless = true,
-                ExecutablePath = chromeLocation
-            };
+            //var chromeLocation = configuration["AppSettings:ChromeLocation"];
+            //var options = new LaunchOptions()
+            //{
+            //    Headless = true,
+            //    //ExecutablePath = chromeLocation
+            //};
 
-            _browser = Puppeteer.LaunchAsync(options).Result;
+            //_browser = Puppeteer.LaunchAsync(options).Result;
         }
 
         public async Task<string> Retrieve()
         {
-            var page = await _browser.NewPageAsync();
-            await page.GoToAsync(urlString);
+            //var page = await _browser.NewPageAsync();
+            //await page.GoToAsync(urlString);
 
-            var elements = await page .EvaluateExpressionAsync($"Array.from(document.querySelectorAll('p')).map(e => e.innerHTML);");
-            var iban = elements.Values<string>().First();
+            //var elements = await page .EvaluateExpressionAsync($"Array.from(document.querySelectorAll('p')).map(e => e.innerHTML);");
+            //var iban = elements.Values<string>().First();
 
+            var iban = "iban-" + DateTime.UtcNow.ToString(); // just a placeholder until I can get Puppeteer/Selenium to work in docker.
             return iban;
         }
     }
