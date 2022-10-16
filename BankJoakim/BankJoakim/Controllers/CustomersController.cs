@@ -17,14 +17,14 @@ namespace BankJoakim.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCustomers([FromQuery] int skip, [FromQuery] int take)
+        public async Task<IActionResult> GetCustomers([FromQuery] int? skip, [FromQuery] int? take)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var customers = await _mediator.Send(new CustomersQuery(skip, take));
+            var customers = await _mediator.Send(new CustomersQuery(skip ?? 0, take ?? 50));
 
             return Ok(customers);
         }
