@@ -1,11 +1,9 @@
 ﻿using BankJoakim.MediatR.Commands;
 using BankJoakim.MediatR.Queries;
-using BankJoakim.Models.Accounts;
 using BankJoakim.Resources.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BankJoakim.Controllers
@@ -18,21 +16,6 @@ namespace BankJoakim.Controllers
         public AccountsController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpGet]
-        public IEnumerable<Account> GetAccounts()
-        {
-            return new List<Account>
-            {
-                new Account
-                {
-                    Id = Guid.NewGuid(),
-                    AccountName = "JoakimsHugeBankAccount",
-                    Balance = 5000000000,
-                    CreatedOn = DateTime.UtcNow
-                }
-            };
         }
 
         [HttpGet]
