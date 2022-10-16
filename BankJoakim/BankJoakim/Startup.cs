@@ -1,6 +1,7 @@
 using BankJoakim.MediatR.QueryHandlers;
 using BankJoakim.Models;
 using BankJoakim.Models.Accounts;
+using BankJoakim.Models.Accounts.RandomIbanRetriever;
 using BankJoakim.Models.Customers;
 using BankJoakim.Models.Deposits;
 using BankJoakim.Models.Transactions;
@@ -36,6 +37,8 @@ namespace BankJoakim
             services.AddScoped<ICustomersRepository, CustomersRepository>();
             services.AddScoped<IDepositsRepository, DepositsRepository>();
             services.AddScoped<ITransactionsRepository, TransactionsRepository>();
+
+            services.AddScoped<IRandomIbanRetriever, RandomIbanRetriever>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

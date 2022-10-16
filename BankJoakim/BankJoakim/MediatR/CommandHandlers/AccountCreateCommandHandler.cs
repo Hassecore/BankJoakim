@@ -1,5 +1,6 @@
 ﻿using BankJoakim.MediatR.Commands;
 using BankJoakim.Models.Accounts;
+using BankJoakim.Models.Accounts.RandomIbanRetriever;
 using BankJoakim.Models.Customers;
 using BankJoakim.Resources.Accounts;
 using MediatR;
@@ -14,12 +15,16 @@ namespace BankJoakim.MediatR.CommandHandlers
     {
         readonly IAccountsRepository _accountsRepository;
         readonly ICustomersRepository _customersRepository;
-        
+        readonly IRandomIbanRetriever _randomIbanRetriever;
+
+
         public AccountCreateCommandHandler(IAccountsRepository accountsRepository,
-                                           ICustomersRepository customersRepository)
+                                           ICustomersRepository customersRepository,
+                                           IRandomIbanRetriever randomIbanRetriever)
         {
             _accountsRepository = accountsRepository;
             _customersRepository = customersRepository;
+            _randomIbanRetriever = randomIbanRetriever;
         }
 
         public Task<CommandResult<AccountResource>> Handle(AccountCreateCommand request, CancellationToken cancellationToken)
@@ -44,7 +49,7 @@ namespace BankJoakim.MediatR.CommandHandlers
                 });
             }
 
-            var iban = RetrieveRandomIban();
+            var iban = _randomIbanRetriever.Retrieve().Result;
             var account = new Account
             {
                 Id = Guid.NewGuid(),
@@ -70,13 +75,6 @@ namespace BankJoakim.MediatR.CommandHandlers
                     CreatedOn = account.CreatedOn,
                 }
             });
-        }
-
-        private string RetrieveRandomIban()
-        {
-            // to be implemented properly, with http://randomiban.com/?country=Netherlands
-            // for now just some unique string.
-            return $"Iban-{Guid.NewGuid()}"; 
         }
     }
 }
