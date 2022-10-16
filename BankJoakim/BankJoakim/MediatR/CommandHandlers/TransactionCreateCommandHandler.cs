@@ -53,9 +53,9 @@ namespace BankJoakim.MediatR.CommandHandlers
             {
                 Id = Guid.NewGuid(),
                 Ammount = resource.Ammount,
-                SendingAccountId = resource.SendingAccountId,
+                SendingAccountId = resource.SendingAccountId.Value,
                 SendingAccount = sendingAccount,
-                ReceivingAccountId = resource.ReceivingAccountId,
+                ReceivingAccountId = resource.ReceivingAccountId.Value,
                 ReceivingAccount = receivingAccount
             };
 

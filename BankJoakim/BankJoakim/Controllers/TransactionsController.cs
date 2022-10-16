@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace BankJoakim.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class TransactionsController : ControllerBase
     {
         readonly IMediator _mediator;
@@ -14,6 +16,7 @@ namespace BankJoakim.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost]
         public async Task<IActionResult> CreateTransaction([FromBody] TransactionCreateResource resource)
         {
             if (!ModelState.IsValid)
