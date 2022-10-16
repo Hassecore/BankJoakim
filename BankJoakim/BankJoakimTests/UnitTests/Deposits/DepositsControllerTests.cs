@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,14 +79,23 @@ namespace BankJoakimTests.UnitTests.Deposits
 
             var result = _controller.CreateDeposit(createResource).Result;
 
-            var depositResult = (result as OkObjectResult).Value as DepositResource;
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, ((BadRequestObjectResult)result).StatusCode);
+
+            Assert.AreEqual(commandResult.ErrorMessage, (result as BadRequestObjectResult).Value);
+        }
+
+        [TestMethod]
+        public void CreateDeposit_WhenModelStateIsNotValid_ShouldReturnBadRequest()
+        {
+            _controller.ModelState.AddModelError("test1", "test2");
+
+            var result = _controller.CreateDeposit(createResource).Result;
 
             Assert.IsNotNull(result);
-
-            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-
-            Assert.AreEqual(createResource.Ammount, depositResult.Ammount);
-            Assert.AreEqual(createResource.AccountId, depositResult.AccountId);
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, ((BadRequestResult)result).StatusCode);
         }
     }
 }
